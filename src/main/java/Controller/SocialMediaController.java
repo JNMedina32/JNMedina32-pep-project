@@ -75,7 +75,9 @@ public class SocialMediaController {
     private void createMessageHandler(Context ctx) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         Message message = mapper.readValue(ctx.body(), Message.class);
-        Message newMessage = this.messageService.creatMessage(message);
+        System.out.println("new message to create: " + message);
+        Message newMessage = this.messageService.createMessage(message);
+        System.out.println("newly created message " + newMessage);
         if(newMessage != null){
             ctx.json(newMessage);
         } else {
@@ -91,13 +93,21 @@ public class SocialMediaController {
     private void getMessageByIdHandler(Context ctx) throws JsonProcessingException {
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
         Message message = this.messageService.getMessageById(message_id);
+        if(message.getMessage_id() == 0){
+            ctx.status(200);
+        } else {
         ctx.json(message);
+        }
     }
 
     private void deleteMessageHandler(Context ctx) throws JsonProcessingException {
         int message_id = Integer.parseInt(ctx.pathParam("message_id"));
         Message message = this.messageService.deleteMessage(message_id);
+        if(message.getMessage_id() == 0){
+            ctx.status(200);
+        } else {
         ctx.json(message);
+        }
     }
 
     private void updateMessageHandler(Context ctx) throws JsonProcessingException {
@@ -107,6 +117,7 @@ public class SocialMediaController {
         Message updatedMessage = this.messageService.updateMessage(message_id, message);
         if(updatedMessage != null){
             ctx.json(updatedMessage);
+            ctx.status(200);
         } else {
             ctx.status(400);
         }

@@ -20,11 +20,11 @@ public class MessageService {
         messageDAO = new MessageDAO();
     }
 
-    public Message creatMessage(Message message) {
+    public Message createMessage(Message message) {
         if (verifyMessageAndPost_id(message.getMessage_text(), message.getPosted_by()) == false) {
             return null;
         }
-        return messageDAO.creatMessage(message);
+        return messageDAO.createMessage(message);
     }
 
     public List<Message> getAllMessages() {

@@ -52,12 +52,6 @@ public class AccountDAO {
       }
       return null;
   }
-
-
-
-
-
-
   
   /**
    * Checks if username is already in use
